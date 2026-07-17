@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prism — MIDI to WLED colour</title>
+<style>
+  :root{--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,monospace;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--sans);background:#0E0C13;color:#ECEAF4;padding:24px;}
+  .wrap{max-width:640px;margin:0 auto;}
+  .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9E97AD;}
+  h1{font-size:26px;margin:.2em 0;}
+  .tag{color:#B7B1C4;font-size:15px;line-height:1.5;}
+  .card{background:#171420;border:1px solid #262232;border-radius:14px;padding:18px;margin-top:18px;}
+  .m{display:flex;align-items:center;gap:12px;margin:10px 0;}
+  .m .lab{width:130px;font-size:13px;color:#C9C4D6;}
+  input[type=range]{flex:1;accent-color:#7B6CF0;}
+  .val{width:74px;font-family:var(--mono);font-size:12px;color:#9E97AD;text-align:right;}
+  svg{width:100%;height:auto;display:block;margin-top:12px;}
+  .lamp{display:flex;align-items:center;gap:14px;margin-top:16px;}
+  .bulb{width:56px;height:56px;border-radius:50%;box-shadow:0 0 26px 4px currentColor;transition:all .15s;}
+  .lg{font-size:13px;color:#B7B1C4;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:12px;}
+  .lgi{display:flex;align-items:center;gap:7px;font-size:12.5px;}
+  .dot{width:13px;height:13px;border-radius:3px;}
+  a{color:#9B8CF0;}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Max for Live · MIDI → WLED</div>
+  <h1>Prism</h1>
+  <p class="tag">Split the keyboard into colour zones — play low and the lamp glows one colour, higher up another. A prism turns your playing into light. Drives <a href="https://github.com/openlamp/wled-midi">wled-midi</a>.</p>
+
+  <section class="card">
+    <div class="m"><span class="lab"><b>Split 1</b> · Low/Mid</span>
+      <input type="range" id="s1" min="24" max="96" step="1" value="52"><span class="val" id="v1"></span></div>
+    <div class="m"><span class="lab"><b>Split 2</b> · Mid/High</span>
+      <input type="range" id="s2" min="24" max="96" step="1" value="72"><span class="val" id="v2"></span></div>
+    <svg id="kb" viewBox="0 0 600 120" role="img" aria-label="Keyboard split into three colour zones"></svg>
+    <div class="legend" id="legend"></div>
+    <div class="lamp">
+      <div class="bulb" id="bulb" style="color:#4B7BEC;background:#4B7BEC"></div>
+      <div class="lg">Play the <b id="pz">Low</b> zone → the lamp shows <b id="pc">blue</b>.<br>
+        <span style="color:#9E97AD">(governing note = lowest held; velocity → brightness)</span></div>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var LO=24,HI=96,NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  // wled-midi looks 59..68 -> demo RGB
+  var LOOKS=[['black','#22202B'],['red','#E5484D'],['orange','#E5822E'],['yellow','#E5C02E'],
+    ['green','#35B98C'],['cyan','#2EC5D3'],['blue','#4B7BEC'],['magenta','#C04BEC'],['white','#F2F0F5'],['effect','#8E7BF0']];
+  // zone colours (index into LOOKS): Low=blue(6) Mid=green(4) High=red(1) — matches device defaults
+  var ZC=[6,4,1];
+  var isW=function(n){return [0,2,4,5,7,9,11].indexOf(n%12)>=0;};
+  var nm=function(n){return NAMES[n%12]+(Math.floor(n/12)-2);};
+  var whites=[];for(var n=LO;n<=HI;n++)if(isW(n))whites.push(n);
+  var kW=600/whites.length;
+  var xOf=function(n){var c=0;for(var m=LO;m<n;m++)if(isW(m))c++;return c*kW;};
+  var zoneOf=function(n,a,b){return n<a?0:(n<b?1:2);};
+  var kb=document.getElementById('kb'),legend=document.getElementById('legend'),bulb=document.getElementById('bulb');
+  var s1=document.getElementById('s1'),s2=document.getElementById('s2'),v1=document.getElementById('v1'),v2=document.getElementById('v2');
+  var pz=document.getElementById('pz'),pc=document.getElementById('pc');
+  function draw(a,b){
+    var s='';
+    whites.forEach(function(n){var z=zoneOf(n,a,b),c=LOOKS[ZC[z]][1];
+      s+='<rect x="'+(xOf(n)+0.5)+'" y="8" width="'+(kW-1)+'" height="104" rx="3" fill="#F7F5FA" stroke="'+c+'" stroke-width="2"/>';
+      s+='<rect x="'+(xOf(n)+0.5)+'" y="8" width="'+(kW-1)+'" height="16" fill="'+c+'"/>';});
+    for(var n2=LO;n2<=HI;n2++){if(isW(n2))continue;var z2=zoneOf(n2,a,b),x=xOf(n2)-(kW*0.3);
+      s+='<rect x="'+x+'" y="8" width="'+(kW*0.6)+'" height="64" rx="2" fill="#211E2B"/>';
+      s+='<rect x="'+x+'" y="8" width="'+(kW*0.6)+'" height="8" fill="'+LOOKS[ZC[z2]][1]+'"/>';}
+    kb.innerHTML=s;
+    legend.innerHTML=[['Low',0,a],['Mid',1,b],['High',2,null]].map(function(r){
+      var c=LOOKS[ZC[r[1]]];return '<div class="lgi"><span class="dot" style="background:'+c[1]+'"></span><b>'+r[0]+'</b> · '+c[0]+'</div>';}).join('');
+    var lc=LOOKS[ZC[0]];  // govern=lowest -> Low zone colour shown on the bulb
+    bulb.style.color=lc[1];bulb.style.background=lc[1];pz.textContent='Low';pc.textContent=lc[0];
+  }
+  function render(e){
+    var a=+s1.value,b=+s2.value;
+    if(a>b){if(e&&e.target===s1){b=a;s2.value=a;}else{a=b;s1.value=b;}}
+    v1.textContent=nm(a)+' ('+a+')';v2.textContent=nm(b)+' ('+b+')';draw(a,b);
+  }
+  s1.addEventListener('input',render);s2.addEventListener('input',render);render();
+})();
+</script>
+</body>
+</html>
