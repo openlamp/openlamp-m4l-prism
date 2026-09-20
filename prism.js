@@ -1,11 +1,11 @@
 // prism.js — brain of the "Prism" Max for Live device.
 // A prism splits white light into colours; Prism splits your KEYBOARD into colour zones and lights
-// your WLED lamps from what you play. It emits the open wled-midi convention (`lamp` mode) to a MIDI
-// port named "OpenLamp" — a wled-midi implementation (the engine, the browser tool, the Bome pack…)
+// your WLED lamps from what you play. It emits the open OpenLamp MIDI spec (`lamp` mode) to a MIDI
+// port named "OpenLamp" — an OpenLamp MIDI implementation (the engine, the browser tool, the Bome pack…)
 // turns each message into WLED JSON. Inspired by zone.js (the keyboard-zone idea), but lighting-first:
 // no instrument routing here, just light.
 //
-// What it does: up to three pitch zones (Low / Mid / High), each bound to a wled-midi "look" (a colour).
+// What it does: up to three pitch zones (Low / Mid / High), each bound to an OpenLamp MIDI "look" (a colour).
 // Play a note and the lamp takes the colour of the zone the *governing* note falls in; velocity sets
 // brightness. When the last note lifts, Prism either holds the last colour or blacks out (your choice).
 //
@@ -14,9 +14,9 @@
 // MIT — free to use, modify and share.
 
 autowatch = 1;
-outlets = 1;   // 0 = wled-midi out (looks + brightness CC) -> midiout OpenLamp
+outlets = 1;   // 0 = OpenLamp MIDI out (looks + brightness CC) -> midiout OpenLamp
 
-// --- wled-midi vocabulary (see https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md) --------------
+// --- OpenLamp MIDI vocabulary (see https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md) --------------
 // Looks are note-ons 59..68 on the lamp channel; brightness is CC 1 (0..127). We target channel `chan`
 // (1 = all lamps; raise it to address a group in a multi-zone WLED setup).
 var LOOK = { black:59, red:60, orange:61, yellow:62, green:63, cyan:64, blue:65, magenta:66, white:67, effect:68 };
@@ -25,7 +25,7 @@ var LOOK_NAMES = ["black","red","orange","yellow","green","cyan","blue","magenta
 // --- config (all driven from Live params, no hardcoding) --------------------------------------------
 var split1 = 52, split2 = 72;     // zone boundaries: Low < split1 <= Mid < split2 <= High (MIDI notes)
 var loLook = 65, midLook = 63, hiLook = 60;   // each zone's look note (default blue / green / red)
-var chan = 1;                     // wled-midi channel (1 = all lamps)
+var chan = 1;                     // OpenLamp MIDI channel (1 = all lamps)
 var govern = 0;                   // which held note governs the colour: 0 = lowest, 1 = highest, 2 = most-recent
 var holdOnRelease = 1;            // 1 = keep the last colour when all notes lift ; 0 = black out
 var brightness = 1;              // 1 = velocity sets brightness (CC1) ; 0 = colour only
