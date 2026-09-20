@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="Prism — a Max for Live device that lights WLED from what you play, in three keyboard colour zones">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="0.55" stop-color="#141a35"/>
+      <stop offset="1" stop-color="#1c1030"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffb454"/>
+      <stop offset="0.5" stop-color="#ff6a4d"/>
+      <stop offset="1" stop-color="#e64c9e"/>
+    </linearGradient>
+    <linearGradient id="accentV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb454"/>
+      <stop offset="1" stop-color="#e64c9e"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="360" fill="url(#bg)"/>
+
+  <!-- Motif: a prism splitting one white beam into three colour zones -->
+  <g transform="translate(160,180)">
+    <path d="M-86 -4 H-34" stroke="#e8ecff" stroke-width="4" stroke-linecap="round" opacity="0.92"/>
+    <path d="M0 -60 L62 48 H-62 Z" fill="none" stroke="url(#accent)" stroke-width="2.5" stroke-linejoin="round"/>
+    <g stroke-width="4" stroke-linecap="round" opacity="0.95">
+      <path d="M38 4 H90" stroke="#ffb454"/>
+      <path d="M49 22 H90" stroke="#ff6a4d"/>
+      <path d="M59 40 H90" stroke="#e64c9e"/>
+    </g>
+    <circle cx="-32" cy="-4" r="9" fill="url(#accent)" filter="url(#glow)"/>
+  </g>
+
+  <!-- Title -->
+  <g transform="translate(300,116)">
+    <text x="4" y="-34" font-family="Menlo, Consolas, monospace" font-size="17" font-weight="700" fill="url(#accent)" letter-spacing="5">OPENLAMP · MAX FOR LIVE</text>
+    <text x="0" y="44" font-family="-apple-system, Segoe UI, sans-serif" font-size="84" font-weight="700" fill="#ffffff" letter-spacing="-1">Prism</text>
+    <rect x="4" y="62" width="218" height="5" rx="2.5" fill="url(#accent)"/>
+    <text x="4" y="108" font-family="-apple-system, Segoe UI, sans-serif" font-size="23" fill="#aab4d8">Lights WLED from what you play — three keyboard colour zones, velocity → brightness.</text>
+    <text x="4" y="146" font-family="Menlo, Consolas, monospace" font-size="17" fill="#7f8bb5">openlamp-m4l-prism  ·  emitted as lamp mode  ·  Max for Live device</text>
+  </g>
+
+  <!-- Lamp line (shared family strip) -->
+  <g transform="translate(300,286)" opacity="0.9">
+    <rect x="0" y="0" width="910" height="46" rx="8" fill="#0e1430" stroke="#2a3358" stroke-width="1.5"/>
+    <path d="M 26 23 H 910" stroke="#2a3358" stroke-width="2"/>
+    <path d="M 26 23 H 150" stroke="url(#accent)" stroke-width="2.5"/>
+    <g><circle cx="26" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/><circle cx="88" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/><circle cx="150" cy="23" r="11" fill="url(#accent)" filter="url(#glow)"/><circle cx="212" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/><circle cx="274" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/><circle cx="336" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/><circle cx="398" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/><circle cx="460" cy="23" r="8" fill="none" stroke="#3a4472" stroke-width="2"/></g>
+  </g>
+</svg>
