@@ -31,7 +31,7 @@
 <main class="wrap">
   <div class="eyebrow">Max for Live · MIDI → WLED</div>
   <h1>Prism</h1>
-  <p class="tag">Split the keyboard into colour zones — play low and the lamp glows one colour, higher up another. A prism turns your playing into light. Drives <a href="https://github.com/openlamp/openlamp-spec-midi">wled-midi</a>.</p>
+  <p class="tag">Split the keyboard into colour zones — play low and the lamp glows one colour, higher up another. A prism turns your playing into light. Drives <a href="https://github.com/openlamp/openlamp-spec-midi">OpenLamp MIDI</a>.</p>
 
   <section class="card">
     <div class="m"><span class="lab"><b>Split 1</b> · Low/Mid</span>
@@ -50,7 +50,7 @@
 <script>
 (function(){
   var LO=24,HI=96,NAMES=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-  // wled-midi looks 59..68 -> demo RGB
+  // OpenLamp MIDI looks 59..68 -> demo RGB
   var LOOKS=[['black','#22202B'],['red','#E5484D'],['orange','#E5822E'],['yellow','#E5C02E'],
     ['green','#35B98C'],['cyan','#2EC5D3'],['blue','#4B7BEC'],['magenta','#C04BEC'],['white','#F2F0F5'],['effect','#8E7BF0']];
   // zone colours (index into LOOKS): Low=blue(6) Mid=green(4) High=red(1) — matches device defaults

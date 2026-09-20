@@ -11,8 +11,8 @@ colours.
 
 It's the lighting-first cousin of [**zone-m4l**](https://github.com/Beennnn/ableton-m4l-zone): same idea of
 keyboard *zones*, but instead of routing notes to instruments, each zone drives a **WLED colour**. Under
-the hood it speaks the open [**wled-midi**](https://github.com/openlamp/openlamp-spec-midi) convention (`lamp`
-mode), so any wled-midi implementation turns it into light.
+the hood it speaks the open [**OpenLamp MIDI**](https://github.com/openlamp/openlamp-spec-midi) convention (`lamp`
+mode), so any OpenLamp MIDI implementation turns it into light.
 
 ## Get it
 
@@ -21,7 +21,7 @@ mode), so any wled-midi implementation turns it into light.
    notes, it mirrors them into light).
 3. Create a virtual MIDI port named **`OpenLamp`** (macOS: Audio MIDI Setup → IAC Driver; Windows:
    [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html)) and point a
-   [wled-midi implementation](https://github.com/openlamp/openlamp-spec-midi#implementations) — the
+   [OpenLamp MIDI implementation](https://github.com/openlamp/openlamp-spec-midi#implementations) — the
    [engine](https://github.com/openlamp/openlamp-engine-python), the [browser tool](https://github.com/openlamp/openlamp-demo-web),
    or the [Bome pack](https://github.com/openlamp/openlamp-pack-bome) — at your WLED device.
 4. Requires Live with Max for Live (Suite, or Standard + M4L).
@@ -29,11 +29,11 @@ mode), so any wled-midi implementation turns it into light.
 ## How it works
 
 Prism watches the notes you play, decides which **zone** the *governing* note falls in, and sends that
-zone's **colour** (a wled-midi "look") plus a **brightness** (CC 1, from velocity) to the `OpenLamp`
+zone's **colour** (a OpenLamp MIDI "look") plus a **brightness** (CC 1, from velocity) to the `OpenLamp`
 port. It only sends on an actual colour change, so it never floods the port.
 
 ```
-midiin → midiparse → [js prism.js] → midiout OpenLamp     (looks + brightness → wled-midi `lamp`)
+midiin → midiparse → [js prism.js] → midiout OpenLamp     (looks + brightness → OpenLamp MIDI `lamp`)
 ```
 
 ## Every field
@@ -43,8 +43,8 @@ midiin → midiparse → [js prism.js] → midiout OpenLamp     (looks + brightn
 | **On** | on | Master enable. Off = Prism stops driving the lamp (and blacks out if *Hold* is off). |
 | **Split1** | 52 | Boundary between the **Low** and **Mid** zones (MIDI note). Notes `< Split1` are Low. |
 | **Split2** | 72 | Boundary between **Mid** and **High**. `Split1 ≤ note < Split2` = Mid; `≥ Split2` = High. |
-| **LoCol / MidCol / HiCol** | 65 / 63 / 60 | Each zone's colour as a wled-midi **look note**: 59 black · 60 red · 61 orange · 62 yellow · 63 green · 64 cyan · 65 blue · 66 magenta · 67 white · 68 effect. Defaults = blue / green / red. |
-| **Chan** | 1 | wled-midi channel (1 = all lamps; raise it to address a group in a multi-zone WLED setup). |
+| **LoCol / MidCol / HiCol** | 65 / 63 / 60 | Each zone's colour as an OpenLamp MIDI **look note**: 59 black · 60 red · 61 orange · 62 yellow · 63 green · 64 cyan · 65 blue · 66 magenta · 67 white · 68 effect. Defaults = blue / green / red. |
+| **Chan** | 1 | OpenLamp MIDI channel (1 = all lamps; raise it to address a group in a multi-zone WLED setup). |
 | **Govern** | 0 | Which held note picks the colour: **0** = lowest, **1** = highest, **2** = most-recent. |
 | **Hold** | on | On = keep the last colour when all notes lift. Off = black out on release. |
 | **Bri** | on | On = velocity sets brightness (CC 1). Off = colour only, brightness untouched. |
@@ -76,7 +76,7 @@ MIT — see [LICENSE](LICENSE).
 
 ---
 
-**Two open standards, one bridge.** Prism emits the open [**wled-midi**](https://github.com/openlamp/openlamp-spec-midi)
+**Two open standards, one bridge.** Prism emits the open [**OpenLamp MIDI**](https://github.com/openlamp/openlamp-spec-midi)
 convention — the agreed dictionary between [**MIDI**](https://midi.org) (the MIDI Association) and
 [**WLED**](https://kno.wled.ge). Free for anyone to build on; part of the
 [OpenLamp](https://github.com/openlamp) ecosystem.
