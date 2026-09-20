@@ -7,7 +7,7 @@ into up to **three colour zones** — play low and the lamp glows one colour, hi
 **velocity → brightness**. A prism splits white light into colours; **Prism** splits your keyboard into
 colours.
 
-It's the lighting-first cousin of [**zone-m4l**](https://github.com/Beennnn/zone-m4l): same idea of
+It's the lighting-first cousin of [**zone-m4l**](https://github.com/Beennnn/ableton-m4l-zone): same idea of
 keyboard *zones*, but instead of routing notes to instruments, each zone drives a **WLED colour**. Under
 the hood it speaks the open [**wled-midi**](https://github.com/openlamp/wled-midi) convention (`lamp`
 mode), so any wled-midi implementation turns it into light.
