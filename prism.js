@@ -16,7 +16,7 @@
 autowatch = 1;
 outlets = 1;   // 0 = wled-midi out (looks + brightness CC) -> midiout OpenLamp
 
-// --- wled-midi vocabulary (see https://github.com/openlamp/wled-midi/blob/main/SPEC.md) --------------
+// --- wled-midi vocabulary (see https://github.com/openlamp/openlamp-spec-midi/blob/main/SPEC.md) --------------
 // Looks are note-ons 59..68 on the lamp channel; brightness is CC 1 (0..127). We target channel `chan`
 // (1 = all lamps; raise it to address a group in a multi-zone WLED setup).
 var LOOK = { black:59, red:60, orange:61, yellow:62, green:63, cyan:64, blue:65, magenta:66, white:67, effect:68 };

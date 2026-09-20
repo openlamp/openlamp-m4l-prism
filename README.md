@@ -9,7 +9,7 @@ colours.
 
 It's the lighting-first cousin of [**zone-m4l**](https://github.com/Beennnn/ableton-m4l-zone): same idea of
 keyboard *zones*, but instead of routing notes to instruments, each zone drives a **WLED colour**. Under
-the hood it speaks the open [**wled-midi**](https://github.com/openlamp/wled-midi) convention (`lamp`
+the hood it speaks the open [**wled-midi**](https://github.com/openlamp/openlamp-spec-midi) convention (`lamp`
 mode), so any wled-midi implementation turns it into light.
 
 ## Get it
@@ -19,9 +19,9 @@ mode), so any wled-midi implementation turns it into light.
    notes, it mirrors them into light).
 3. Create a virtual MIDI port named **`OpenLamp`** (macOS: Audio MIDI Setup → IAC Driver; Windows:
    [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html)) and point a
-   [wled-midi implementation](https://github.com/openlamp/wled-midi#implementations) — the
-   [engine](https://github.com/openlamp/engine), the [browser tool](https://github.com/openlamp/wled-midi-web),
-   or the [Bome pack](https://github.com/openlamp/bome) — at your WLED device.
+   [wled-midi implementation](https://github.com/openlamp/openlamp-spec-midi#implementations) — the
+   [engine](https://github.com/openlamp/openlamp-engine-python), the [browser tool](https://github.com/openlamp/openlamp-demo-web),
+   or the [Bome pack](https://github.com/openlamp/openlamp-pack-bome) — at your WLED device.
 4. Requires Live with Max for Live (Suite, or Standard + M4L).
 
 ## How it works
@@ -74,7 +74,7 @@ MIT — see [LICENSE](LICENSE).
 
 ---
 
-**Two open standards, one bridge.** Prism emits the open [**wled-midi**](https://github.com/openlamp/wled-midi)
+**Two open standards, one bridge.** Prism emits the open [**wled-midi**](https://github.com/openlamp/openlamp-spec-midi)
 convention — the agreed dictionary between [**MIDI**](https://midi.org) (the MIDI Association) and
 [**WLED**](https://kno.wled.ge). Free for anyone to build on; part of the
 [OpenLamp](https://github.com/openlamp) ecosystem.
