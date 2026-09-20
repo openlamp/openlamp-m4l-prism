@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.svg" alt="Prism" width="100%"></p>
+
 # Prism — turn your playing into colour, on WLED
 
 ![Prism — Max for Live MIDI device](prism-device.png)
